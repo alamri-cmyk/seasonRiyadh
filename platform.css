@@ -1,0 +1,311 @@
+/* Xplore Platform — بطاقات، قلوب، توست، ثيم، تحميل */
+:root,
+[data-theme="dark"] {
+    --xp-bg: #0a0618;
+    --xp-surface: rgba(120, 60, 200, 0.12);
+    --xp-border: rgba(255, 255, 255, 0.1);
+    --xp-text: #f4f0ff;
+    --xp-muted: #a89cc8;
+    --xp-accent: #ff9900;
+    --xp-accent2: #00dcb4;
+    --xp-danger: #f87171;
+    --xp-card-radius: 14px;
+}
+
+[data-theme="light"] {
+    --xp-bg: #f4f2fb;
+    --xp-surface: #ffffff;
+    --xp-border: rgba(0, 0, 0, 0.08);
+    --xp-text: #1a1030;
+    --xp-muted: #5c5470;
+    --xp-accent: #e07800;
+    --xp-accent2: #0d9b7a;
+    --xp-danger: #dc2626;
+}
+
+.xp-page-bg {
+    background: var(--xp-bg);
+    color: var(--xp-text);
+    min-height: 100vh;
+}
+
+.xp-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 22px;
+    padding: 16px;
+    background: var(--xp-surface);
+    border: 1px solid var(--xp-border);
+    border-radius: var(--xp-card-radius);
+}
+
+.xp-toolbar input,
+.xp-toolbar select {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--xp-border);
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--xp-text);
+    font-family: inherit;
+    min-width: 180px;
+}
+
+[data-theme="light"] .xp-toolbar input,
+[data-theme="light"] .xp-toolbar select {
+    background: #fff;
+}
+
+.xp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.xp-card {
+    position: relative;
+    background: var(--xp-surface);
+    border: 1px solid var(--xp-border);
+    border-radius: var(--xp-card-radius);
+    overflow: hidden;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.xp-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+.xp-card img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    display: block;
+}
+
+.xp-card-body {
+    padding: 16px 16px 18px;
+}
+
+.xp-card-body h3 {
+    margin: 0 0 8px;
+    font-size: 1.08rem;
+    line-height: 1.35;
+}
+
+.xp-meta {
+    font-size: 0.82rem;
+    color: var(--xp-muted);
+    margin-bottom: 8px;
+}
+
+.xp-price {
+    font-weight: 800;
+    color: var(--xp-accent);
+    font-size: 1.05rem;
+}
+
+.xp-heart {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+    cursor: pointer;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: background 0.2s, transform 0.15s;
+}
+
+.xp-heart:hover {
+    transform: scale(1.08);
+    background: rgba(0, 0, 0, 0.65);
+}
+
+.xp-heart.active {
+    color: #ff4d6d;
+    background: rgba(255, 77, 109, 0.25);
+}
+
+html[dir="rtl"] .xp-heart {
+    right: auto;
+    left: 10px;
+}
+
+.xp-skel {
+    min-height: 280px;
+    border-radius: var(--xp-card-radius);
+    background: linear-gradient(90deg, var(--xp-surface) 25%, rgba(255, 255, 255, 0.06) 50%, var(--xp-surface) 75%);
+    background-size: 400% 100%;
+    animation: xpShine 1.2s ease infinite;
+}
+
+@keyframes xpShine {
+    0% { background-position: 100% 0; }
+    100% { background-position: 0 0; }
+}
+
+.xp-loading .xp-grid {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.xp-toast {
+    position: fixed;
+    bottom: 26px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    padding: 14px 22px;
+    border-radius: 12px;
+    background: var(--xp-surface);
+    border: 1px solid var(--xp-border);
+    color: var(--xp-text);
+    font-weight: 600;
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 0.35s, transform 0.35s;
+    max-width: 92vw;
+    text-align: center;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.xp-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.xp-toast.success {
+    border-color: rgba(0, 220, 180, 0.45);
+    color: var(--xp-accent2);
+}
+
+.xp-toast.error {
+    border-color: rgba(248, 113, 113, 0.5);
+    color: var(--xp-danger);
+}
+
+.xp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    background: linear-gradient(135deg, var(--xp-accent), #ff6b35);
+    color: #fff;
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.2s;
+}
+
+.xp-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(255, 153, 0, 0.35);
+}
+
+.xp-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.xp-btn-ghost {
+    background: transparent;
+    border: 1px solid var(--xp-border);
+    color: var(--xp-text);
+}
+
+.xp-theme-toggle {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--xp-border);
+    color: var(--xp-text);
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+[data-theme="light"] .xp-theme-toggle {
+    background: #fff;
+}
+
+/* ── شريط تنقل الحساب (ملفي / مفضلة / حجوزاتي) ───────────── */
+.xp-account-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    width: 92%;
+    max-width: 640px;
+    margin: 96px auto 0;
+    padding: 8px;
+    background: var(--xp-surface);
+    border: 1px solid var(--xp-border);
+    border-radius: 14px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+.xp-account-tab {
+    flex: 1;
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--xp-muted);
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+.xp-account-tab i {
+    font-size: 0.95rem;
+    color: var(--xp-accent);
+    opacity: 0.85;
+}
+
+.xp-account-tab:hover {
+    background: rgba(255, 153, 0, 0.1);
+    color: var(--xp-text);
+}
+
+.xp-account-tab.active {
+    background: linear-gradient(135deg, rgba(255, 153, 0, 0.28), rgba(255, 107, 53, 0.18));
+    color: var(--xp-text);
+    border: 1px solid rgba(255, 153, 0, 0.35);
+}
+
+.xp-account-tab.active i {
+    opacity: 1;
+}
+
+html[dir="rtl"] .xp-account-tab {
+    flex-direction: row-reverse;
+}
+
+@media (max-width: 520px) {
+    .xp-account-nav {
+        margin-top: 88px;
+        flex-direction: column;
+    }
+    .xp-account-tab {
+        min-width: 0;
+        width: 100%;
+    }
+}

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xplore - Events in Riyadh</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="platform.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&family=Cairo:wght@300;400;600;700;800&display=swap">
+    <style>
+  
+        .event-card .event-card-content .event-rating,
+        .event-card .event-card-content .event-description,
+        .event-card .event-card-content .event-book-btn {
+            display: none;
+        }
+
+        .event-card {
+            cursor: pointer;
+        }
+
+        #eventModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            /* تم التعديل هنا لضمان عدم اختفاء زر الإغلاق في أعلى الشاشة */
+            overflow-y: auto; 
+            padding: 40px 0;
+            box-sizing: border-box;
+        }
+
+        #eventModal .modal-content-box {
+            margin: auto; /* هذا يحافظ على التوسيط المثالي بدون مشاكل */
+            background: #0e0229; 
+            max-width: 450px; 
+            width: 90%;
+            border-radius: 10px;
+            border: 1px solid #ff9900; 
+            animation: modalPopIn 0.3s ease;
+            position: relative; 
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        #eventModal .modal-content-box img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        #eventModal .modal-content-box h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        #eventModal .modal-content-box .modal-rating {
+            color: #ff9900;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        #eventModal .modal-content-box .modal-description {
+            color: #ddd;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        #eventModal .modal-content-box .modal-book-btn {
+            display: block;
+            background: #ff9900;
+            color: #0e0229;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        #eventModal .modal-content-box .modal-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #fff;
+            font-size: 1.8rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            line-height: 1;
+            z-index: 99; /* هذه الإضافة تضمن أن الزر دائماً قابل للضغط ولا تغطيه الصورة */
+        }
+
+        @keyframes modalPopIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+       
+        .event-page {
+          background-color: #0e0229;
+          color: #ffffff;
+          min-height: 100vh;
+        }
+
+        .event-main {
+          width: 88%;
+          max-width: 1200px;
+          margin: 40px auto 60px;
+        }
+
+        .event-hero {
+          background: rgba(255, 255, 255, 0.06);
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          border-radius: 14px;
+          padding: 24px;
+          margin-bottom: 28px;
+        }
+
+        .event-hero h1 {
+          font-size: 2rem;
+          margin-bottom: 10px;
+          color: #ffffff;
+        }
+
+        .event-hero p {
+          line-height: 1.7;
+          color: #e8ddff;
+        }
+
+        .event-events-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+          gap: 20px;
+        }
+
+        .event-card {
+          background: rgba(191, 0, 255, 0.22);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .event-card:hover {
+          box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+        }
+
+        .event-card img {
+          width: 100%;
+          height: 190px;
+          object-fit: cover;
+          display: block;
+        }
+
+        .event-card-content {
+          padding: 16px;
+        }
+
+        .event-card-content h2 {
+          font-size: 1.1rem;
+          margin-bottom: 8px;
+          color: #ffffff;
+        }
+
+        .event-rating {
+          font-weight: 700;
+          color: #ffd166;
+          margin-bottom: 10px;
+        }
+
+        .event-description {
+          color: #f1e9ff;
+          line-height: 1.6;
+          min-height: 88px;
+          margin-bottom: 16px;
+          font-size: 0.95rem;
+        }
+
+        .event-book-btn {
+          display: inline-block;
+          background: #ffffff;
+          color: #2a0b4f;
+          padding: 10px 14px;
+          border-radius: 999px;
+          font-weight: 700;
+          text-decoration: none;
+          transition: all 0.2s ease;
+        }
+
+        .event-book-btn:hover {
+          background: transparent;
+          color: #ffffff;
+          border: 1px solid #ffffff;
+        }
+    </style>
+</head>
+<body class="event-page xp-page-bg" data-listing-type="event" data-page-title="title.events">
+<header>
+  <nav class="navigation">
+    <a href="index.html" class="nav-logo-link">
+      <img src="img/LOGO.png" class="logo" alt="Xplore Riyadh">
+    </a>
+    <div class="navigation-items">
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="Event.html" class="nav-active" data-i18n="nav.events">Events</a>
+      <a href="CoffeeShop.html" data-i18n="nav.restaurants">Restaurants & Cafés</a>
+      <a href="Esport.html" data-i18n="nav.sports">Esports</a>
+      <a href="About us.html" data-i18n="nav.about">About</a>
+      <a href="Contact.html" data-i18n="nav.contact">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button type="button" class="xp-theme-toggle" id="xpThemeToggle"><i class="fas fa-moon"></i></button>
+      <button class="lang-toggle" id="langToggle" onclick="XploreLang.toggle()">
+        <i class="fas fa-globe"></i>
+        <span data-i18n="lang.switch">العربية</span>
+      </button>
+      <a href="login.html" class="nav-btn-login" id="navLogin">
+        <i class="fas fa-sign-in-alt"></i>
+        <span data-i18n="nav.login">Login</span>
+      </a>
+      <a href="register.html" class="nav-btn-signup" id="navSignup">
+        <i class="fas fa-user-plus"></i>
+        <span data-i18n="nav.signup">Sign Up</span>
+      </a>
+      <div class="user-menu" id="userMenu">
+        <div class="user-avatar" id="userAvatarBtn">
+          <div class="avatar-circle" id="avatarInitials">?</div>
+          <span class="user-name" id="navUserName">User</span>
+          <i class="fas fa-chevron-down chevron"></i>
+        </div>
+        <div class="user-dropdown">
+          <div class="dropdown-header">
+            <div class="d-name" id="dropName">User</div>
+            <div class="d-email" id="dropEmail">email</div>
+          </div>
+          <a href="admin.html" class="dropdown-item" id="navAdminItem" style="display:none"><i class="fas fa-user-shield"></i> <span data-i18n="nav.admin">Admin</span></a>
+          <a href="profile.html" class="dropdown-item"><i class="fas fa-user"></i> <span data-i18n="nav.profile">My Profile</span></a>
+          <a href="favorites.html" class="dropdown-item"><i class="fas fa-heart"></i> <span data-i18n="nav.favourites">Favourites</span></a>
+          <a href="bookings.html" class="dropdown-item"><i class="fas fa-ticket-alt"></i> <span data-i18n="nav.bookings">My Bookings</span></a>
+          <button class="dropdown-item logout-item" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> <span data-i18n="nav.signout">Sign Out</span></button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="event-main">
+  <section class="event-hero">
+    <h1 data-i18n="events.hero.h1">Events in Riyadh</h1>
+    <p data-i18n="events.hero.p">
+      Discover amazing events, festivals, waterparks, and entertainment destinations across Riyadh.
+      From Riyadh Season zones to thrilling theme parks, explore and book your experience today.
+    </p>
+  </section>
+  <div class="xp-toolbar">
+    <input type="search" id="listingSearch" data-i18n-ph="platform.searchPh" placeholder="Search…">
+    <select id="listingCategory">
+      <option value="" data-i18n="platform.catAll">All categories</option>
+    </select>
+  </div>
+  <div id="listingsGrid" class="event-events-grid xp-grid"></div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="lang.js"></script>
+<script src="listing-i18n.js"></script>
+<script src="supabase-auth.js"></script>
+<script src="platform.js"></script>
+<script src="listings-page.js"></script>
+<script>
+    document.body.setAttribute('data-page-title', 'title.events');
+    XploreLang.init();
+</script>
+
+   <footer class="elegant-footer">
+    <div class="footer-gradient-line"></div>
+    
+    <div class="footer-container">
+        <div class="footer-brand">
+            <img src="img/LOGO.png" alt="Xplore Riyadh" class="footer-logo">
+            <p class="footer-desc" data-i18n="footer.about_text">
+                Your ultimate guide to Riyadh's vibrant entertainment scene. Discover events, sports, and cultural experiences.
+            </p>
+            <div class="elegant-socials">
+                <a href="https://wa.me/966580911177" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-links">
+            <h3 data-i18n="footer.quick_links">Links</h3>
+            <ul>
+                <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                <li><a href="Event.html" data-i18n="nav.events">Events</a></li>
+                <li><a href="CoffeeShop.html" data-i18n="nav.restaurants">Restaurants</a></li>
+                <li><a href="Esport.html" data-i18n="nav.sports">Esports</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-contact">
+            <h3 data-i18n="footer.contact_us">Contact Us</h3>
+            <ul class="contact-list">
+                <li>
+                    <i class="fas fa-map-marker-alt"></i> 
+                    <span data-i18n="footer.location">Riyadh, KSA</span>
+                </li>
+                <li>
+                    <i class="fas fa-envelope"></i> 
+                    <span>rayanaljndal00@gmail.com</span>
+                </li>
+                <li>
+                    <i class="fas fa-phone-alt"></i> 
+                    <span dir="ltr">+966 58 091 1177</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p data-i18n="footer.copyright">&copy; 2026 Xplore Riyadh. All rights reserved.</p>
+    </div>
+</footer>
+</body>
+</html>

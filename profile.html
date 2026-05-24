@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile – Xplore Riyadh</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="platform.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Cairo:wght@400;600;700&display=swap">
+    <style>
+        .pf-wrap { width: 92%; max-width: 560px; margin: 0 auto; padding: 24px 16px 80px; }
+        .pf-card {
+            background: var(--xp-surface);
+            border: 1px solid var(--xp-border);
+            border-radius: 18px;
+            padding: 32px 28px 36px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+        }
+        .pf-card h2 { text-align: center; margin: 0 0 22px; color: var(--xp-accent); font-size: 1.75rem; }
+        .pf-avatar-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 22px;
+            gap: 12px;
+        }
+        .pf-avatar-inner {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+        }
+        .pf-avatar-inner img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--xp-border);
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+        .pf-avatar-inner.has-photo img {
+            display: block;
+        }
+        .pf-avatar-inner.has-photo .pf-avatar-ph {
+            display: none !important;
+        }
+        .pf-avatar-ph {
+            width: 120px !important;
+            height: 120px !important;
+            font-size: 2.2rem !important;
+            line-height: 1 !important;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+        .pf-avatar-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+        .pf-avatar-btn {
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--xp-border);
+            background: rgba(255, 153, 0, 0.12);
+            color: var(--xp-text);
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+        }
+        .pf-avatar-btn:hover { background: rgba(255, 153, 0, 0.22); }
+        .pf-avatar-hint {
+            font-size: 0.78rem;
+            color: var(--xp-muted);
+            text-align: center;
+            max-width: 280px;
+            line-height: 1.5;
+        }
+        .pf-stats { display: flex; gap: 14px; justify-content: center; margin-bottom: 22px; flex-wrap: wrap; }
+        .pf-stat {
+            padding: 12px 18px; border-radius: 12px; background: rgba(0,0,0,.2);
+            border: 1px solid var(--xp-border); text-align: center; min-width: 120px;
+        }
+        .pf-stat b { display: block; font-size: 1.35rem; color: var(--xp-accent2); }
+        .pf-stat span { font-size: 0.82rem; color: var(--xp-muted); }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--xp-text); }
+        .form-group input {
+            width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--xp-border);
+            background: rgba(0,0,0,.2); color: var(--xp-text); font-family: inherit; box-sizing: border-box;
+        }
+        [data-theme="light"] .form-group input { background: #fff; }
+        .btn-save {
+            width: 100%; padding: 14px; border: none; border-radius: 12px; font-weight: 700; cursor: pointer;
+            background: linear-gradient(135deg, var(--xp-accent), #ff6b35); color: #fff; font-family: inherit; margin-top: 8px;
+        }
+        .btn-sec { width: 100%; margin-top: 10px; padding: 12px; border-radius: 12px; border: 1px solid var(--xp-border); background: transparent; color: var(--xp-text); font-weight: 600; cursor: pointer; font-family: inherit; }
+        html[dir="rtl"] .form-group label { text-align: right; }
+    </style>
+</head>
+<body class="xp-page-bg" data-page-title="title.profile" data-account-page="profile">
+<header>
+    <nav class="navigation">
+        <a href="index.html" class="nav-logo-link"><img src="img/LOGO.png" class="logo" alt=""></a>
+        <div class="navigation-items">
+            <a href="index.html" data-i18n="nav.home">Home</a>
+            <a href="Event.html" data-i18n="nav.events">Events</a>
+            <a href="CoffeeShop.html" data-i18n="nav.restaurants">Restaurants</a>
+            <a href="Esport.html" data-i18n="nav.sports">Esports</a>
+            <a href="About us.html" data-i18n="nav.about">About</a>
+            <a href="Contact.html" data-i18n="nav.contact">Contact</a>
+        </div>
+        <div class="nav-actions">
+            <button type="button" class="xp-theme-toggle" id="xpThemeToggle"><i class="fas fa-moon"></i></button>
+            <button class="lang-toggle" id="langToggle" onclick="XploreLang.toggle()"><i class="fas fa-globe"></i><span data-i18n="lang.switch">العربية</span></button>
+            <a href="login.html" class="nav-btn-login" id="navLogin"><span data-i18n="nav.login">Login</span></a>
+            <a href="register.html" class="nav-btn-signup" id="navSignup"><span data-i18n="nav.signup">Sign Up</span></a>
+            <div class="user-menu" id="userMenu">
+                <div class="user-avatar" id="userAvatarBtn">
+                    <div class="avatar-circle" id="avatarInitials">U</div>
+                    <span class="user-name" id="navUserName">User</span>
+                    <i class="fas fa-chevron-down chevron"></i>
+                </div>
+                <div class="user-dropdown">
+                    <div class="dropdown-header">
+                        <div class="d-name" id="dropName">User</div>
+                        <div class="d-email" id="dropEmail"></div>
+                    </div>
+                    <a href="admin.html" class="dropdown-item" id="navAdminItem" style="display:none"><i class="fas fa-user-shield"></i> <span data-i18n="nav.admin">Admin</span></a>
+                    <a href="profile.html" class="dropdown-item"><i class="fas fa-user"></i> <span data-i18n="nav.profile">Profile</span></a>
+                    <a href="favorites.html" class="dropdown-item"><i class="fas fa-heart"></i> <span data-i18n="nav.favourites">Favourites</span></a>
+                    <a href="bookings.html" class="dropdown-item"><i class="fas fa-ticket-alt"></i> <span data-i18n="nav.bookings">Bookings</span></a>
+                    <button type="button" class="dropdown-item logout-item" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> <span data-i18n="nav.signout">Sign out</span></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<nav class="xp-account-nav" aria-label="Account">
+    <a href="profile.html" class="xp-account-tab active"><i class="fas fa-user"></i> <span data-i18n="nav.profile">ملفي الشخصي</span></a>
+    <a href="favorites.html" class="xp-account-tab"><i class="fas fa-heart"></i> <span data-i18n="nav.favourites">المفضلة</span></a>
+    <a href="bookings.html" class="xp-account-tab"><i class="fas fa-ticket-alt"></i> <span data-i18n="nav.bookings">حجوزاتي</span></a>
+</nav>
+
+<main class="pf-wrap">
+    <div class="pf-card">
+        <h2 data-i18n="profile.heading">My Profile</h2>
+        <div class="pf-avatar-wrap">
+            <div class="pf-avatar-inner">
+                <img id="pfAvatarImg" src="" alt="">
+                <div id="pfAvatarPh" class="avatar-circle pf-avatar-ph">?</div>
+            </div>
+            <div class="pf-avatar-actions">
+                <button type="button" class="pf-avatar-btn" id="pfPickAvatar"><i class="fas fa-camera"></i> <span data-i18n="profile.pickAvatar">اختيار صورة</span></button>
+                <button type="button" class="pf-avatar-btn" id="pfClearAvatar" style="display:none"><i class="fas fa-times"></i> <span data-i18n="profile.removeAvatar">إزالة</span></button>
+            </div>
+            <input type="file" id="pfAvatarFile" accept="image/jpeg,image/png,image/webp,image/gif" hidden>
+            <p class="pf-avatar-hint" data-i18n="profile.avatarHint">تظهر صورتك هنا وفي الأعلى بجانب اسمك بعد الحفظ</p>
+        </div>
+        <div class="pf-stats">
+            <div class="pf-stat"><b id="pfBc">0</b><span data-i18n="profile.stats.book">Bookings</span></div>
+            <div class="pf-stat"><b id="pfFc">0</b><span data-i18n="profile.stats.fav">Favorites</span></div>
+        </div>
+        <form id="profileForm">
+            <div class="form-group">
+                <label for="fullName" data-i18n="profile.lbl.name">Full Name</label>
+                <input type="text" id="fullName" required>
+            </div>
+            <div class="form-group">
+                <label for="emailAddress" data-i18n="profile.lbl.email">Email</label>
+                <input type="email" id="emailAddress" readonly style="opacity:.75">
+            </div>
+            <div class="form-group">
+                <label for="phone" data-i18n="profile.lbl.phone">Phone</label>
+                <input type="text" id="phone" placeholder="+966...">
+            </div>
+            <input type="hidden" id="avatarUrl">
+            <button type="submit" class="btn-save" data-i18n="profile.btn.save">Save</button>
+        </form>
+        <form id="passForm" style="margin-top:28px;padding-top:22px;border-top:1px solid var(--xp-border)">
+            <div class="form-group">
+                <label for="newPassword" data-i18n="profile.lbl.password">New password</label>
+                <input type="password" id="newPassword" autocomplete="new-password">
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword" data-i18n="profile.lbl.confirm">Confirm</label>
+                <input type="password" id="confirmPassword" autocomplete="new-password">
+            </div>
+            <button type="submit" class="btn-sec" data-i18n="profile.btn.pass">Update password</button>
+        </form>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="lang.js"></script>
+<script src="supabase-auth.js"></script>
+<script src="platform.js"></script>
+<script>
+(function () {
+    function t(k) { return typeof XploreLang !== 'undefined' ? XploreLang.t(k) : k; }
+
+    function showProfileAvatar(url, name) {
+        var av = document.getElementById('pfAvatarImg');
+        var ph = document.getElementById('pfAvatarPh');
+        var inner = av && av.parentElement;
+        var clearBtn = document.getElementById('pfClearAvatar');
+        var valid = typeof XploreAuth !== 'undefined' && XploreAuth.validAvatarUrl(url);
+        var displayName = (name && String(name).trim()) || '?';
+
+        function showInitials(keepRemoveBtn) {
+            if (inner) inner.classList.remove('has-photo');
+            av.onerror = null;
+            av.onload = null;
+            av.removeAttribute('src');
+            ph.style.display = 'flex';
+            ph.textContent = XploreAuth.initials(displayName);
+            if (clearBtn) clearBtn.style.display = keepRemoveBtn ? '' : 'none';
+        }
+
+        function revealPhoto() {
+            if (inner) inner.classList.add('has-photo');
+            if (clearBtn) clearBtn.style.display = '';
+        }
+
+        if (valid) {
+            ph.style.display = 'flex';
+            ph.textContent = XploreAuth.initials(displayName);
+            if (inner) inner.classList.remove('has-photo');
+
+            av.onerror = function () { showInitials(true); };
+            av.onload = revealPhoto;
+            var src = XploreAuth.avatarUrlWithCache(url);
+            av.src = '';
+            av.src = src;
+
+            if (av.complete && av.naturalWidth > 0) {
+                revealPhoto();
+            }
+        } else {
+            showInitials(false);
+        }
+    }
+
+    async function load() {
+        var sess = await XploreAuth.client().auth.getSession();
+        if (!sess.data || !sess.data.session) {
+            XplorePlatform.toast(t('profile.needLogin'), 'error');
+            location.replace('login.html?redirect=profile.html');
+            return;
+        }
+        var u = sess.data.session.user;
+        document.getElementById('emailAddress').value = u.email || '';
+
+        var pr = await XploreAuth.getProfile(u.id);
+        var p = (pr.data) || {};
+        document.getElementById('fullName').value = p.full_name || (u.user_metadata && u.user_metadata.full_name) || '';
+        document.getElementById('phone').value = p.phone || '';
+        var avUrl = XploreAuth.validAvatarUrl(p.avatar_url) ? p.avatar_url : '';
+        document.getElementById('avatarUrl').value = avUrl;
+        showProfileAvatar(avUrl, document.getElementById('fullName').value || u.email);
+
+        var bk = await XplorePlatform.myBookings();
+        var nB = (bk.data || []).filter(function (x) { return x.status === 'confirmed'; }).length;
+        document.getElementById('pfBc').textContent = nB;
+
+        var fv = await XplorePlatform.myFavoriteListingIds();
+        document.getElementById('pfFc').textContent = (fv.data || []).length;
+    }
+
+    document.getElementById('profileForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        var sess = await XploreAuth.client().auth.getSession();
+        if (!sess.data || !sess.data.session) return;
+        var u = sess.data.session.user;
+        var row = {
+            id: u.id,
+            full_name: document.getElementById('fullName').value.trim(),
+            email: u.email,
+            phone: document.getElementById('phone').value.trim() || null,
+            avatar_url: document.getElementById('avatarUrl').value.trim() || null
+        };
+        var meta = Object.assign({}, u.user_metadata || {}, { full_name: row.full_name });
+        var a = await XploreAuth.client().auth.updateUser({ data: meta });
+        if (a.error) { XplorePlatform.toast(a.error.message, 'error'); return; }
+        var r = await XploreAuth.upsertProfile(row);
+        if (r.error) XplorePlatform.toast(r.error.message, 'error');
+        else {
+            XplorePlatform.toast(t('profile.saved'), 'success');
+            await XploreAuth.refreshNav();
+            load();
+        }
+    });
+
+    document.getElementById('pfPickAvatar').addEventListener('click', function () {
+        document.getElementById('pfAvatarFile').click();
+    });
+
+    document.getElementById('pfAvatarFile').addEventListener('change', async function () {
+        var f = document.getElementById('pfAvatarFile').files && document.getElementById('pfAvatarFile').files[0];
+        if (!f) return;
+        var pickBtn = document.getElementById('pfPickAvatar');
+        if (pickBtn) pickBtn.disabled = true;
+
+        var up = await XplorePlatform.uploadProfileAvatar(f);
+        if (up.error) {
+            if (pickBtn) pickBtn.disabled = false;
+            XplorePlatform.toast(up.error.message, 'error');
+            return;
+        }
+        var publicUrl = up.data && up.data.publicUrl;
+        if (!publicUrl) {
+            if (pickBtn) pickBtn.disabled = false;
+            XplorePlatform.toast(t('platform.err'), 'error');
+            return;
+        }
+
+        var saved = await XploreAuth.saveProfileAvatar(publicUrl);
+        if (pickBtn) pickBtn.disabled = false;
+
+        if (saved.error) {
+            XplorePlatform.toast(saved.error.message, 'error');
+            return;
+        }
+
+        document.getElementById('avatarUrl').value = publicUrl;
+        showProfileAvatar(publicUrl, document.getElementById('fullName').value);
+        XplorePlatform.toast(t('profile.avatarOk'), 'success');
+    });
+
+    document.getElementById('pfClearAvatar').addEventListener('click', async function () {
+        if (!confirm(t('profile.confirmRemoveAvatar'))) return;
+        var clearBtn = document.getElementById('pfClearAvatar');
+        if (clearBtn) clearBtn.disabled = true;
+
+        var saved = await XploreAuth.saveProfileAvatar(null);
+        if (clearBtn) clearBtn.disabled = false;
+
+        if (saved.error) {
+            XplorePlatform.toast(saved.error.message, 'error');
+            return;
+        }
+
+        document.getElementById('avatarUrl').value = '';
+        document.getElementById('pfAvatarFile').value = '';
+        showProfileAvatar('', document.getElementById('fullName').value);
+        XplorePlatform.toast(t('profile.avatarRemoved'), 'success');
+    });
+
+    document.getElementById('passForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        var p1 = document.getElementById('newPassword').value;
+        var p2 = document.getElementById('confirmPassword').value;
+        if (p1.length < 6) { XplorePlatform.toast(t('alert.passlen'), 'error'); return; }
+        if (p1 !== p2) { XplorePlatform.toast(t('profile.passMismatch'), 'error'); return; }
+        var r = await XploreAuth.client().auth.updateUser({ password: p1 });
+        if (r.error) XplorePlatform.toast(r.error.message, 'error');
+        else {
+            XplorePlatform.toast(t('profile.passOk'), 'success');
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        }
+    });
+
+    function boot() {
+        XploreLang.init();
+        document.getElementById('xpThemeToggle').addEventListener('click', function () { XplorePlatform.toggleTheme(); });
+        load();
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+    else boot();
+})();
+</script>
+</body>
+</html>

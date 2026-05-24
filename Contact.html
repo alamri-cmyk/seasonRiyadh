@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Xplore Riyadh</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&family=Cairo:wght@300;400;600;700;800&display=swap">
+    <style>
+        body.contact-page {
+            background-color: #0e0229;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+        .contact-main {
+            width: 88%;
+            max-width: 1200px;
+            margin: 60px auto;
+        }
+        .contact-hero {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .contact-hero h1 {
+            font-size: 3rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        .contact-hero p {
+            font-size: 1.3rem;
+            color: #e8ddff;
+            line-height: 1.7;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .contact-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 50px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+        .contact-info h2,
+        .contact-form h2 {
+            color: #ff9900;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .contact-info-item {
+            margin-bottom: 30px;
+        }
+        .contact-info-item h3 {
+            color: #ff9900;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        .contact-info-item p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #e8ddff;
+            margin: 0;
+        }
+        .contact-info-item .contact-value-ltr {
+            direction: ltr;
+            unicode-bidi: embed;
+            display: block;
+        }
+        html[dir="rtl"] .contact-info {
+            text-align: right;
+        }
+        html[dir="rtl"] .contact-info-item h3 {
+            text-align: right;
+        }
+        html[dir="rtl"] .contact-info-item p {
+            text-align: right;
+        }
+        html[dir="rtl"] .contact-info-item .contact-value-ltr {
+            text-align: right;
+            width: 100%;
+        }
+        html[dir="ltr"] .contact-info-item .contact-value-ltr {
+            text-align: left;
+        }
+        .social-media {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .social-media a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: #ffffff;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .social-media a:hover {
+            background: #ff9900;
+            color: #0e0229;
+            transform: scale(1.1);
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #ff9900;
+            box-shadow: 0 0 0 3px rgba(255, 153, 0, 0.2);
+        }
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: #aaa;
+        }
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        .contact-btn {
+            background: linear-gradient(45deg, #ff9900, #ff6b35);
+            color: #0e0229;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 153, 0, 0.4);
+        }
+        @media (max-width: 900px) {
+            .contact-box {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 30px;
+            }
+            .contact-main {
+                width: 92%;
+                margin: 40px auto;
+            }
+            .contact-hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body class="contact-page" data-page-title="title.contact">
+    <header>
+        <nav class="navigation">
+            <a href="index.html" class="nav-logo-link">
+                <img src="img/LOGO.png" class="logo" alt="Xplore Riyadh">
+            </a>
+            <div class="navigation-items">
+                <a href="index.html" data-i18n="nav.home">Home</a>
+                <a href="Event.html" data-i18n="nav.events">Events</a>
+                <a href="CoffeeShop.html" data-i18n="nav.restaurants">Restaurants & Cafés</a>
+                <a href="Esport.html" data-i18n="nav.sports">Esports</a>
+                <a href="About us.html" data-i18n="nav.about">About</a>
+                <a href="Contact.html" class="nav-active" data-i18n="nav.contact">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="lang-toggle" id="langToggle" onclick="XploreLang.toggle()">
+                    <i class="fas fa-globe"></i>
+                    <span data-i18n="lang.switch">العربية</span>
+                </button>
+                <a href="login.html" class="nav-btn-login" id="navLogin">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span data-i18n="nav.login">Login</span>
+                </a>
+                <a href="register.html" class="nav-btn-signup" id="navSignup">
+                    <i class="fas fa-user-plus"></i>
+                    <span data-i18n="nav.signup">Sign Up</span>
+                </a>
+                <div class="user-menu" id="userMenu">
+                    <div class="user-avatar" id="userAvatarBtn">
+                        <div class="avatar-circle" id="avatarInitials">?</div>
+                        <span class="user-name" id="navUserName">User</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="user-dropdown">
+                        <div class="dropdown-header">
+                            <div class="d-name" id="dropName">User</div>
+                            <div class="d-email" id="dropEmail">email</div>
+                        </div>
+                        <a href="admin.html" class="dropdown-item" id="navAdminItem" style="display:none"><i class="fas fa-user-shield"></i> <span data-i18n="nav.admin">Admin</span></a>
+                        <a href="profile.html" class="dropdown-item"><i class="fas fa-user"></i> <span data-i18n="nav.profile">My Profile</span></a>
+                        <a href="favorites.html" class="dropdown-item"><i class="fas fa-heart"></i> <span data-i18n="nav.favourites">Favourites</span></a>
+                        <a href="bookings.html" class="dropdown-item"><i class="fas fa-ticket-alt"></i> <span data-i18n="nav.bookings">My Bookings</span></a>
+                        <button type="button" class="dropdown-item logout-item" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> <span data-i18n="nav.signout">Sign Out</span></button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="contact-main">
+        <section class="contact-hero">
+            <h1 data-i18n="contact.hero.h1">Get In Touch</h1>
+            <p data-i18n="contact.hero.p">
+                We'd love to hear from you! Whether you have questions about events, partnership opportunities, 
+                or feedback about our platform, our team is ready to assist.
+            </p>
+        </section>
+
+        <section class="contact-box">
+            <div class="contact-info">
+                <h2 data-i18n="contact.info.h2">Visit Us</h2>
+                <div class="contact-info-item">
+                    <h3>📍 <span data-i18n="contact.loc.h3">Location</span></h3>
+                    <p data-i18n="contact.loc.p">Riyadh, Kingdom of Saudi Arabia</p>
+                </div>
+                <div class="contact-info-item">
+                    <h3>📧 <span data-i18n="contact.email.h3">Email</span></h3>
+                    <p class="contact-value-ltr" dir="ltr">rayanaljndal00@gmail.com</p>
+                </div>
+                <div class="contact-info-item">
+                    <h3>📱 <span data-i18n="contact.phone.h3">Phone</span></h3>
+                    <p class="contact-value-ltr" dir="ltr"><a href="tel:+966580911177" style="color:inherit;text-decoration:none">+966 58 091 1177</a></p>
+                </div>
+                <div class="contact-info-item">
+                    <h3>🌐 <span data-i18n="contact.social.h3">Social Media</span></h3>
+                    <div class="social-media">
+                        <a href="https://wa.me/966580911177" target="_blank" rel="noopener noreferrer" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h2 data-i18n="contact.form.h2">Send Message</h2>
+                <form action="https://formsubmit.co/rayanaljndal00@gmail.com" method="POST">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_subject" value="New message from Xplore Riyadh Contact Form!">
+                    <input type="text" name="name" data-i18n-ph="contact.form.name" placeholder="Your Name *" required>
+                    <input type="email" name="email" data-i18n-ph="contact.form.email" placeholder="Your Email *" required>
+                    <textarea name="message" data-i18n-ph="contact.form.msg" placeholder="Your Message *" required></textarea>
+                    <button type="submit" class="contact-btn" data-i18n="contact.form.btn">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="lang.js"></script>
+<script src="supabase-auth.js"></script>
+<script>
+    XploreLang.init();
+</script>
+
+   <footer class="elegant-footer">
+    <div class="footer-gradient-line"></div>
+    
+    <div class="footer-container">
+        <div class="footer-brand">
+            <img src="img/LOGO.png" alt="Xplore Riyadh" class="footer-logo">
+            <p class="footer-desc" data-i18n="footer.about_text">
+                Your ultimate guide to Riyadh's vibrant entertainment scene. Discover events, sports, and cultural experiences.
+            </p>
+            <div class="elegant-socials">
+                <a href="https://wa.me/966580911177" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-links">
+            <h3 data-i18n="footer.quick_links">Links</h3>
+            <ul>
+                <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                <li><a href="Event.html" data-i18n="nav.events">Events</a></li>
+                <li><a href="CoffeeShop.html" data-i18n="nav.restaurants">Restaurants</a></li>
+                <li><a href="Esport.html" data-i18n="nav.sports">Esports</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-contact">
+            <h3 data-i18n="footer.contact_us">Contact Us</h3>
+            <ul class="contact-list">
+                <li>
+                    <i class="fas fa-map-marker-alt"></i> 
+                    <span data-i18n="footer.location">Riyadh, KSA</span>
+                </li>
+                <li>
+                    <i class="fas fa-envelope"></i> 
+                    <span>rayanaljndal00@gmail.com</span>
+                </li>
+                <li>
+                    <i class="fas fa-phone-alt"></i> 
+                    <span class="contact-ltr" dir="ltr">+966 58 091 1177</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p data-i18n="footer.copyright">&copy; 2026 Xplore Riyadh. All rights reserved.</p>
+    </div>
+
+</body>
+</html>
+

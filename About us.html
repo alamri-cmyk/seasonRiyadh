@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Xplore Riyadh</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&family=Cairo:wght@300;400;600;700;800&display=swap">
+    <style>
+        body.about-page {
+            background-color: #0e0229;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+        .about-main {
+            width: 88%;
+            max-width: 1200px;
+            margin: 60px auto;
+        }
+        .about-hero {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .about-hero h1 {
+            font-size: 3rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+        .about-hero p {
+            font-size: 1.3rem;
+            color: #e8ddff;
+            line-height: 1.7;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .about-content {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        .about-content h2 {
+            color: #ff9900;
+            font-size: 2.2rem;
+            margin: 40px 0 25px;
+            border-bottom: 2px solid rgba(255, 153, 0, 0.5);
+            padding-bottom: 10px;
+        }
+        .about-content h2:first-child { margin-top: 0; }
+        .about-content p { font-size: 1.2rem; line-height: 1.8; margin-bottom: 20px; color: #f0f0f0; }
+        .about-content ul { margin: 20px 0 20px 30px; }
+        .about-content li { font-size: 1.2rem; margin-bottom: 12px; line-height: 1.6; color: #e8ddff; }
+        .about-content strong { color: #ff9900; }
+        .about-link { color: #ff9900; text-decoration: none; font-weight: 600; }
+        .about-link:hover { text-decoration: underline; }
+        @media (max-width: 768px) {
+            .about-main { width: 92%; margin: 40px auto; }
+            .about-hero h1 { font-size: 2.2rem; }
+            .about-content { padding: 30px 20px; }
+            .about-content h2 { font-size: 1.8rem; }
+            .about-content p, .about-content li { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body class="about-page" data-page-title="title.about">
+    
+    <header>
+        <nav class="navigation">
+            <a href="index.html" class="nav-logo-link">
+                <img src="img/LOGO.png" class="logo" alt="Xplore Riyadh">
+            </a>
+            <div class="navigation-items">
+                <a href="index.html" data-i18n="nav.home">Home</a>
+                <a href="Event.html" data-i18n="nav.events">Events</a>
+                <a href="CoffeeShop.html" data-i18n="nav.restaurants">Restaurants & Cafés</a>
+                <a href="Esport.html" data-i18n="nav.sports">Esports</a>
+                <a href="About us.html" class="nav-active" data-i18n="nav.about">About</a>
+                <a href="Contact.html" data-i18n="nav.contact">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="lang-toggle" id="langToggle" onclick="XploreLang.toggle()">
+                    <i class="fas fa-globe"></i>
+                    <span data-i18n="lang.switch">العربية</span>
+                </button>
+                <a href="login.html" class="nav-btn-login" id="navLogin">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span data-i18n="nav.login">Login</span>
+                </a>
+                <a href="register.html" class="nav-btn-signup" id="navSignup">
+                    <i class="fas fa-user-plus"></i>
+                    <span data-i18n="nav.signup">Sign Up</span>
+                </a>
+                <div class="user-menu" id="userMenu">
+                    <div class="user-avatar" id="userAvatarBtn">
+                        <div class="avatar-circle" id="avatarInitials">?</div>
+                        <span class="user-name" id="navUserName">User</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="user-dropdown">
+                        <div class="dropdown-header">
+                            <div class="d-name" id="dropName">User</div>
+                            <div class="d-email" id="dropEmail">email</div>
+                        </div>
+                        <a href="admin.html" class="dropdown-item" id="navAdminItem" style="display:none"><i class="fas fa-user-shield"></i> <span data-i18n="nav.admin">Admin</span></a>
+                        <a href="profile.html" class="dropdown-item"><i class="fas fa-user"></i> <span data-i18n="nav.profile">My Profile</span></a>
+                        <a href="favorites.html" class="dropdown-item"><i class="fas fa-heart"></i> <span data-i18n="nav.favourites">Favourites</span></a>
+                        <a href="bookings.html" class="dropdown-item"><i class="fas fa-ticket-alt"></i> <span data-i18n="nav.bookings">My Bookings</span></a>
+                        <button type="button" class="dropdown-item logout-item" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> <span data-i18n="nav.signout">Sign Out</span></button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="about-main">
+      
+        <section class="about-hero">
+            <h1 data-i18n="about.page.h1">About Xplore Riyadh</h1>
+            <p data-i18n="about.page.sub">
+                Your gateway to Saudi Arabia's entertainment revolution. Inspired by Vision 2030, we help you discover 
+                the best events, sports, dining, and cultural experiences transforming Riyadh into a global destination.
+            </p>
+        </section>
+
+        
+        <div class="about-content">
+            <h2 data-i18n="about.s1.h2">Our Story & Vision 2030</h2>
+            <p data-i18n="about.s1.p">
+                Our journey is inspired by Saudi Vision 2030. Before 2016, entertainment options were limited. 
+                Today, thanks to the massive transformation led by the Kingdom, Saudi Arabia has become a global hub for tourism and leisure. 
+                We created Xplore Riyadh to keep up with this incredible speed of change and help you navigate the thousands of events happening every year.
+            </p>
+
+            <h2 data-i18n="about.s2.h2">The General Entertainment Authority (GEA)</h2>
+            <p data-i18n="about.s2.p">
+                We closely follow the calendar set by the General Entertainment Authority (GEA). 
+                The GEA has successfully organized massive seasons like Riyadh Season and Jeddah Season, attracting millions of visitors. 
+                Our goal is to organize this information for you in one simple, easy-to-use place.
+            </p>
+
+            <h2 data-i18n="about.s3.h2">Quality of Life Program</h2>
+            <p data-i18n="about.s3.p">
+                We believe in the "Quality of Life" program, a key pillar of Vision 2030. This program aims to improve lifestyles 
+                for individuals and families. By listing sports events, art exhibitions, concerts, and more, we encourage everyone 
+                to go out, participate, and enjoy life in the Kingdom.
+            </p>
+
+            <h2 data-i18n="about.s4.h2">What You Can Find Here</h2>
+            <p data-i18n="about.s4.p">We provide accurate details about:</p>
+            <ul>
+                <li><strong data-i18n="about.s4.l1">Mega Seasons:</strong> <span data-i18n="about.s4.l1t">Updates on Riyadh Season, Jeddah Season, and Diriyah Season.</span></li>
+                <li><strong data-i18n="about.s4.l2">Concerts:</strong> <span data-i18n="about.s4.l2t">Dates and ticket information for local and international artists.</span></li>
+                <li><strong data-i18n="about.s4.l3">Sports:</strong> <span data-i18n="about.s4.l3t">Football matches, Formula 1, boxing championships, and esports.</span></li>
+                <li><strong data-i18n="about.s4.l4">Dining:</strong> <span data-i18n="about.s4.l4t">Luxury restaurants, pop-up cafés, and culinary experiences.</span></li>
+            </ul>
+
+            <h2 data-i18n="about.s5.h2">Why This Matters</h2>
+            <p data-i18n="about.s5.p">
+                The entertainment sector creates jobs for Saudi youth and boosts the economy. By using Xplore Riyadh, 
+                you're supporting this growth while discovering the hidden gems of our beautiful country.
+            </p>
+
+            <h2 data-i18n="about.s6.h2">Ready to Connect?</h2>
+            <p><span data-i18n="about.s6.p">We're always looking to improve. Have suggestions or partnership ideas?</span> 
+                <a href="Contact.html" class="about-link" data-i18n="about.contact.link">Visit our Contact page</a>.
+            </p>
+        </div>
+    </main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="lang.js"></script>
+<script src="supabase-auth.js"></script>
+<script>
+    XploreLang.init();
+</script>
+
+   <footer class="elegant-footer">
+    <div class="footer-gradient-line"></div>
+    
+    <div class="footer-container">
+        <div class="footer-brand">
+            <img src="img/LOGO.png" alt="Xplore Riyadh" class="footer-logo">
+            <p class="footer-desc" data-i18n="footer.about_text">
+                Your ultimate guide to Riyadh's vibrant entertainment scene. Discover events, sports, and cultural experiences.
+            </p>
+            <div class="elegant-socials">
+                <a href="https://wa.me/966580911177" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-links">
+            <h3 data-i18n="footer.quick_links">Links</h3>
+            <ul>
+                <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                <li><a href="Event.html" data-i18n="nav.events">Events</a></li>
+                <li><a href="CoffeeShop.html" data-i18n="nav.restaurants">Restaurants</a></li>
+                <li><a href="Esport.html" data-i18n="nav.sports">Esports</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-contact">
+            <h3 data-i18n="footer.contact_us">Contact Us</h3>
+            <ul class="contact-list">
+                <li>
+                    <i class="fas fa-map-marker-alt"></i> 
+                    <span data-i18n="footer.location">Riyadh, KSA</span>
+                </li>
+                <li>
+                    <i class="fas fa-envelope"></i> 
+                    <span>rayanaljndal00@gmail.com</span>
+                </li>
+                <li>
+                    <i class="fas fa-phone-alt"></i> 
+                    <span dir="ltr">+966 58 091 1177</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p data-i18n="footer.copyright">&copy; 2026 Xplore Riyadh. All rights reserved.</p>
+    </div>
+
+</body>
+</html>
+

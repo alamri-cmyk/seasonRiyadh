@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم – Xplore Riyadh</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Cairo:wght@400;600;700;800&display=swap">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="adm-body" data-page-title="title.admin">
+
+<!-- وصول مرفوض -->
+<div id="accessDenied" class="access-denied" style="display:none">
+    <i class="fas fa-shield-alt"></i>
+    <h2 data-i18n="admin.denied.title">غير مصرح</h2>
+    <p data-i18n="admin.denied.desc">ليس لديك صلاحية الوصول إلى لوحة التحكم. يجب أن تكون مشرفاً.</p>
+    <a href="index.html" data-i18n="admin.denied.back">العودة للرئيسية</a>
+</div>
+
+<!-- التطبيق -->
+<div id="admApp" class="adm-layout" style="display:none">
+    <aside class="adm-sidebar">
+        <div class="adm-brand">
+            <img src="img/LOGO.png" alt="Xplore">
+            <span>Xplore</span>
+        </div>
+
+        <div class="adm-user-card">
+            <div class="avatar" id="sidebarAvatar">A</div>
+            <div class="info">
+                <div class="name" id="sidebarName">—</div>
+                <div class="role" id="sidebarRole" data-i18n="admin.role.sysadmin">مشرف النظام</div>
+            </div>
+        </div>
+
+        <nav class="adm-nav">
+            <div class="adm-nav-section" data-i18n="admin.nav.main">الرئيسية</div>
+            <button type="button" class="adm-nav-link active" data-page="overview">
+                <i class="fas fa-chart-pie"></i>
+                <span data-i18n="admin.nav.overview">نظرة عامة</span>
+            </button>
+
+            <div class="adm-nav-section" data-i18n="admin.nav.usersMgmt">إدارة المستخدمين</div>
+            <button type="button" class="adm-nav-link" data-page="users">
+                <i class="fas fa-users"></i>
+                <span data-i18n="admin.nav.users">المستخدمون</span>
+                <span class="badge" id="badgeUsers">0</span>
+            </button>
+
+            <div class="adm-nav-section" data-i18n="admin.nav.platform">المنصة</div>
+            <button type="button" class="adm-nav-link" data-page="listings">
+                <i class="fas fa-calendar-alt"></i>
+                <span data-i18n="admin.nav.listings">العروض</span>
+            </button>
+            <button type="button" class="adm-nav-link" data-page="bookings">
+                <i class="fas fa-ticket-alt"></i>
+                <span data-i18n="admin.nav.bookings">الحجوزات</span>
+            </button>
+            <button type="button" class="adm-nav-link" data-page="stats">
+                <i class="fas fa-chart-line"></i>
+                <span data-i18n="admin.nav.stats">الإحصائيات</span>
+            </button>
+
+            <div class="adm-nav-section" data-i18n="admin.nav.site">الموقع</div>
+            <a href="index.html" class="adm-nav-link">
+                <i class="fas fa-home"></i>
+                <span data-i18n="nav.home">الرئيسية</span>
+            </a>
+        </nav>
+
+        <div class="adm-sidebar-footer">
+            <button type="button" class="btn-logout" id="admLogout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span data-i18n="nav.signout">تسجيل الخروج</span>
+            </button>
+        </div>
+    </aside>
+
+    <div class="adm-main">
+        <header class="adm-topbar">
+            <div>
+                <button type="button" class="menu-toggle" id="menuToggle" aria-label="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 id="pageTitle" data-i18n="admin.page.overview">نظرة عامة</h1>
+                <div class="date" id="pageSubtitle"></div>
+            </div>
+            <div class="adm-topbar-actions">
+                <button type="button" class="lang-btn-sm" id="langToggle" onclick="XploreLang.toggle()">
+                    <i class="fas fa-globe"></i>
+                    <span data-i18n="lang.switch">English</span>
+                </button>
+                <div class="mini-user">
+                    <span id="topName">—</span>
+                    <div class="mini-avatar" id="topAvatar">A</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="adm-content">
+            <!-- نظرة عامة -->
+            <section id="page-overview" class="adm-page active">
+                <div class="stats-grid">
+                    <div class="stat-box highlight">
+                        <span class="label"><i class="fas fa-users"></i> <span data-i18n="admin.stat.total">إجمالي المستخدمين</span></span>
+                        <span class="value" id="statTotal">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="label"><i class="fas fa-user"></i> <span data-i18n="admin.stat.regular">مستخدمون</span></span>
+                        <span class="value" id="statUsers">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="label"><i class="fas fa-user-shield"></i> <span data-i18n="admin.stat.admins">مشرفون</span></span>
+                        <span class="value" id="statAdmins">0</span>
+                    </div>
+                </div>
+
+                <div class="cards-row">
+                    <div class="adm-card">
+                        <div class="adm-card-head">
+                            <h3 data-i18n="admin.recent.title">آخر المستخدمين</h3>
+                            <button type="button" class="lang-btn-sm" style="cursor:pointer" onclick="document.querySelector('[data-page=users]').click()">
+                                <span data-i18n="admin.recent.viewAll">عرض الكل</span>
+                            </button>
+                        </div>
+                        <div class="adm-card-body" id="recentUsersList"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- إدارة المستخدمين -->
+            <section id="page-users" class="adm-page">
+                <div class="users-toolbar">
+                    <h2 data-i18n="admin.users.title">إدارة المستخدمين</h2>
+                    <div class="search-wrap">
+                        <i class="fas fa-search"></i>
+                        <input type="search" id="userSearch" data-i18n-ph="admin.search.ph" placeholder="بحث بالاسم أو الإيميل...">
+                    </div>
+                    <select class="filter-select" id="roleFilter">
+                        <option value="all" data-i18n="admin.filter.all">كل المستخدمين</option>
+                        <option value="user" data-i18n="admin.filter.user">مستخدمون فقط</option>
+                        <option value="admin" data-i18n="admin.filter.admin">مشرفون فقط</option>
+                    </select>
+                </div>
+
+                <div id="usersLoading" class="loading-state">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p data-i18n="admin.loading">جاري التحميل...</p>
+                </div>
+
+                <div class="table-wrap" id="usersTableWrap" style="display:none">
+                    <table class="adm-table">
+                        <thead>
+                            <tr>
+                                <th data-i18n="admin.th.name">الاسم</th>
+                                <th data-i18n="admin.th.email">البريد الإلكتروني</th>
+                                <th data-i18n="admin.th.phone">رقم الجوال</th>
+                                <th data-i18n="admin.th.role">الدور</th>
+                                <th data-i18n="admin.th.date">تاريخ الإنشاء</th>
+                                <th data-i18n="admin.th.actions">الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="page-listings" class="adm-page">
+                <h2 data-i18n="admin.listings.title">إدارة العروض</h2>
+
+                <div class="lst-panel">
+                    <div class="lst-panel-head">
+                        <h3 id="lstFormTitle" data-i18n="admin.lst.formNew">إضافة عرض جديد</h3>
+                        <p class="lst-form-hint" id="lstFormHint" data-i18n="admin.lst.formHint">املأ الحقول ثم اضغط «حفظ العرض»</p>
+                    </div>
+
+                    <input type="hidden" id="lstId">
+
+                    <fieldset class="lst-section">
+                        <legend data-i18n="admin.lst.sectionBasic">المعلومات الأساسية</legend>
+                        <div class="lst-grid lst-grid-2">
+                            <div class="lst-field">
+                                <label for="lstType" data-i18n="admin.lst.type">نوع العرض</label>
+                                <select id="lstType" class="lst-input"></select>
+                                <span class="lst-hint" data-i18n="admin.lst.typeHint">فعالية، مطعم، أو رياضة</span>
+                            </div>
+                            <div class="lst-field">
+                                <label for="lstTitle" data-i18n="admin.lst.title">اسم العرض / الفعالية</label>
+                                <input type="text" id="lstTitle" class="lst-input" required data-i18n-ph="admin.lst.titlePh" placeholder="مثال: سيكس فلاجز القدية">
+                            </div>
+                            <div class="lst-field lst-field-full">
+                                <label for="lstSlug" data-i18n="admin.lst.slug">الرابط المختصر (slug)</label>
+                                <input type="text" id="lstSlug" class="lst-input" dir="ltr" data-i18n-ph="admin.lst.slugPh" placeholder="six-flags-qiddiya">
+                                <span class="lst-hint" data-i18n="admin.lst.slugHint">يُولَّد تلقائياً من الاسم إن تركته فارغاً</span>
+                            </div>
+                            <div class="lst-field lst-field-full">
+                                <label for="lstDesc" data-i18n="admin.lst.desc">وصف العرض</label>
+                                <textarea id="lstDesc" class="lst-input lst-textarea" rows="4" data-i18n-ph="admin.lst.descPh" placeholder="اكتب وصفاً يظهر للزوار..."></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="lst-section">
+                        <legend data-i18n="admin.lst.sectionPrice">التسعير والمخزون</legend>
+                        <div class="lst-grid lst-grid-3">
+                            <div class="lst-field">
+                                <label for="lstPrice" data-i18n="admin.lst.price">السعر (ريال)</label>
+                                <input type="number" id="lstPrice" class="lst-input" min="0" step="0.01" placeholder="295">
+                            </div>
+                            <div class="lst-field">
+                                <label for="lstStock" data-i18n="admin.lst.stock">عدد التذاكر / المخزون</label>
+                                <input type="number" id="lstStock" class="lst-input" min="0" step="1" placeholder="500">
+                            </div>
+                            <div class="lst-field">
+                                <label for="lstCategory" data-i18n="admin.lst.category">التصنيف</label>
+                                <input type="text" id="lstCategory" class="lst-input" data-i18n-ph="admin.lst.categoryPh" placeholder="مثال: مدن ترفيهية">
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="lst-section">
+                        <legend data-i18n="admin.lst.sectionPlace">المكان</legend>
+                        <div class="lst-grid lst-grid-1">
+                            <div class="lst-field">
+                                <label for="lstVenue" data-i18n="admin.lst.venue">الموقع / المدينة</label>
+                                <input type="text" id="lstVenue" class="lst-input" data-i18n-ph="admin.lst.venuePh" placeholder="مثال: القدية — الرياض">
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="lst-section">
+                        <legend data-i18n="admin.lst.sectionImage">صورة العرض</legend>
+                        <div class="lst-image-row">
+                            <div class="lst-preview-wrap">
+                                <img id="lstPreview" class="lst-preview" src="img/LOGO.png" alt="">
+                                <span class="lst-preview-empty" id="lstPreviewEmpty" data-i18n="admin.lst.noImage">لا توجد صورة</span>
+                            </div>
+                            <div class="lst-image-controls">
+                                <input type="file" id="lstFile" accept="image/jpeg,image/png,image/webp,image/gif" hidden>
+                                <button type="button" class="btn-assign" id="lstPickImage"><i class="fas fa-image"></i> <span data-i18n="admin.lst.pickImage">اختيار صورة من الجهاز</span></button>
+                                <button type="button" class="lang-btn-sm" id="lstUpload" style="display:none"><span data-i18n="admin.lst.uploading">جاري الرفع...</span></button>
+                                <div class="lst-field" style="margin-top:12px">
+                                    <label for="lstImage" data-i18n="admin.lst.imagePath">مسار الصورة (رابط أو مجلد محلي)</label>
+                                    <input type="text" id="lstImage" class="lst-input" dir="ltr" data-i18n-ph="admin.lst.imagePh" placeholder="event/1.jpeg">
+                                    <span class="lst-hint" data-i18n="admin.lst.imageHint">مثال: event/5.jpeg أو رابط Supabase بعد الرفع</span>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="lst-section lst-section-inline">
+                        <label class="lst-check">
+                            <input type="checkbox" id="lstPub" checked>
+                            <span data-i18n="admin.lst.published">نشر العرض على الموقع (يظهر للزوار)</span>
+                        </label>
+                    </fieldset>
+
+                    <div class="lst-actions">
+                        <button type="button" class="btn-assign lst-btn-primary" id="lstSave"><i class="fas fa-save"></i> <span data-i18n="admin.lst.saveBtn">حفظ العرض</span></button>
+                        <button type="button" class="btn-delete" id="lstNew"><i class="fas fa-plus"></i> <span data-i18n="admin.listings.add">عرض جديد</span></button>
+                    </div>
+                </div>
+
+                <h3 class="lst-table-title" data-i18n="admin.lst.listTitle">العروض الحالية</h3>
+                <div class="table-wrap">
+                    <table class="adm-table adm-table-listings">
+                        <thead>
+                            <tr>
+                                <th data-i18n="admin.lst.thImage">الصورة</th>
+                                <th data-i18n="admin.lst.type">النوع</th>
+                                <th data-i18n="admin.lst.title">العنوان</th>
+                                <th data-i18n="admin.lst.price">السعر</th>
+                                <th data-i18n="admin.lst.stock">المخزون</th>
+                                <th data-i18n="admin.lst.publishedShort">منشور</th>
+                                <th data-i18n="admin.col.actions">إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listingsTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="page-bookings" class="adm-page">
+                <h2 data-i18n="admin.bookings.title">الحجوزات</h2>
+                <div class="table-wrap" style="margin-top:16px">
+                    <table class="adm-table">
+                        <thead>
+                            <tr>
+                                <th data-i18n="bookings.date">التاريخ</th>
+                                <th data-i18n="bookings.item">العرض</th>
+                                <th data-i18n="bookings.qty">الكمية</th>
+                                <th data-i18n="bookings.total">الإجمالي</th>
+                                <th data-i18n="bookings.status">الحالة</th>
+                                <th data-i18n="admin.bookings.user">المستخدم</th>
+                                <th data-i18n="admin.col.actions">إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="page-stats" class="adm-page">
+                <h2 data-i18n="admin.stats.title">إحصائيات</h2>
+                <div class="stats-grid" style="margin-top:16px">
+                    <div class="stat-box"><span class="label" data-i18n="admin.stats.revenue">إيراد</span><span class="value" id="stRevenue">0</span></div>
+                    <div class="stat-box"><span class="label" data-i18n="admin.stats.bookings">حجوزات</span><span class="value" id="stBookings">0</span></div>
+                </div>
+                <div class="adm-card" style="margin-top:20px">
+                    <div class="adm-card-head"><h3 data-i18n="admin.stats.top">الأكثر حجزاً</h3></div>
+                    <div class="adm-card-body" id="stTopList"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div id="admToast" class="adm-toast" role="status"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="lang.js"></script>
+<script src="supabase-auth.js"></script>
+<script src="platform.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

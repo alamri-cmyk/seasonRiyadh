@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="platform.detailTitle">تفاصيل العرض</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="platform.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Cairo:wght@400;600;700;800&display=swap">
+    <style>
+        .ld-wrap { width: 92%; max-width: 960px; margin: 0 auto; padding: 28px 16px 64px; }
+        .ld-hero { border-radius: 18px; overflow: hidden; border: 1px solid var(--xp-border); background: var(--xp-surface); }
+        .ld-hero img { width: 100%; max-height: 380px; object-fit: cover; display: block; }
+        .ld-body { padding: 28px 24px 32px; }
+        .ld-title { font-size: 1.75rem; margin: 0 0 10px; font-weight: 800; }
+        .ld-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-bottom: 18px; }
+        .ld-desc { line-height: 1.85; color: var(--xp-muted); margin-bottom: 22px; }
+        .ld-buy-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 20px; }
+        .ld-qty { width: 72px; padding: 10px; border-radius: 10px; border: 1px solid var(--xp-border); background: rgba(0,0,0,.2); color: var(--xp-text); }
+        [data-theme="light"] .ld-qty { background: #fff; }
+        .ld-rev { margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--xp-border); }
+        .ld-stars button { background: none; border: none; color: #ffd166; font-size: 1.4rem; cursor: pointer; padding: 4px; }
+        .ld-modal { position: fixed; inset: 0; z-index: 9999; display: none; align-items: center; justify-content: center; padding: 16px; }
+        .ld-modal.show { display: flex; }
+        .ld-modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.65); backdrop-filter: blur(4px); }
+        .ld-modal-panel { position: relative; max-width: 420px; width: 100%; background: var(--xp-surface); border: 1px solid var(--xp-border); border-radius: 18px; padding: 24px; box-shadow: 0 24px 48px rgba(0,0,0,.35); }
+        .ld-modal-panel h2 { margin: 0 0 16px; font-size: 1.25rem; color: var(--xp-accent, #f5a623); }
+        .ld-ticket-lines { display: grid; gap: 10px; font-size: 0.95rem; line-height: 1.55; }
+        .ld-ticket-lines strong { color: var(--xp-text); opacity: .9; }
+        .ld-modal-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; justify-content: flex-end; }
+    </style>
+</head>
+<body class="xp-page-bg" data-page-title="platform.detailTitle">
+<header>
+    <nav class="navigation">
+        <a href="index.html" class="nav-logo-link"><img src="img/LOGO.png" class="logo" alt="Xplore Riyadh"></a>
+        <div class="navigation-items">
+            <a href="index.html" data-i18n="nav.home">الرئيسية</a>
+            <a href="Event.html" data-i18n="nav.events">الفعاليات</a>
+            <a href="CoffeeShop.html" data-i18n="nav.restaurants">المطاعم وكوفيهات</a>
+            <a href="Esport.html" data-i18n="nav.sports">الرياضة</a>
+            <a href="About us.html" data-i18n="nav.about">من نحن</a>
+            <a href="Contact.html" data-i18n="nav.contact">تواصل</a>
+        </div>
+        <div class="nav-actions">
+            <button type="button" class="xp-theme-toggle" id="xpThemeToggle" aria-label="Theme"><i class="fas fa-moon"></i></button>
+            <button class="lang-toggle" id="langToggle" onclick="XploreLang.toggle()"><i class="fas fa-globe"></i><span data-i18n="lang.switch">English</span></button>
+            <a href="login.html" class="nav-btn-login" id="navLogin"><i class="fas fa-sign-in-alt"></i><span data-i18n="nav.login">دخول</span></a>
+            <a href="register.html" class="nav-btn-signup" id="navSignup"><i class="fas fa-user-plus"></i><span data-i18n="nav.signup">تسجيل</span></a>
+            <div class="user-menu" id="userMenu">
+                <div class="user-avatar" id="userAvatarBtn">
+                    <div class="avatar-circle" id="avatarInitials">?</div>
+                    <span class="user-name" id="navUserName">User</span>
+                    <i class="fas fa-chevron-down chevron"></i>
+                </div>
+                <div class="user-dropdown">
+                    <div class="dropdown-header">
+                        <div class="d-name" id="dropName">User</div>
+                        <div class="d-email" id="dropEmail"></div>
+                    </div>
+                    <a href="admin.html" class="dropdown-item" id="navAdminItem" style="display:none"><i class="fas fa-user-shield"></i> <span data-i18n="nav.admin">لوحة التحكم</span></a>
+                    <a href="profile.html" class="dropdown-item"><i class="fas fa-user"></i> <span data-i18n="nav.profile">ملفي الشخصي</span></a>
+                    <a href="favorites.html" class="dropdown-item"><i class="fas fa-heart"></i> <span data-i18n="nav.favourites">المفضلة</span></a>
+                    <a href="bookings.html" class="dropdown-item"><i class="fas fa-ticket-alt"></i> <span data-i18n="nav.bookings">حجوزاتي</span></a>
+                    <button type="button" class="dropdown-item logout-item" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> <span data-i18n="nav.signout">خروج</span></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main class="ld-wrap">
+    <div id="ldLoading" class="xp-skel" style="min-height:320px;border-radius:18px"></div>
+    <div id="ldContent" style="display:none">
+        <div class="ld-hero">
+            <img id="ldImg" src="" alt="">
+            <div class="ld-body">
+                <h1 class="ld-title" id="ldTitle"></h1>
+                <div class="ld-row">
+                    <span class="xp-price" id="ldPrice"></span>
+                    <span class="xp-meta" id="ldStock"></span>
+                    <span class="xp-meta" id="ldRating"></span>
+                    <button type="button" class="xp-heart" id="ldHeart" aria-label="fav"><i class="fas fa-heart"></i></button>
+                </div>
+                <p class="ld-desc" id="ldDesc"></p>
+                <div class="ld-buy-row">
+                    <label class="xp-meta"><span data-i18n="platform.qty">الكمية</span>
+                        <input type="number" class="ld-qty" id="ldQty" min="1" max="20" value="1">
+                    </label>
+                    <button type="button" class="xp-btn" id="ldBuy"><i class="fas fa-ticket-alt"></i> <span data-i18n="platform.buy">شراء تذكرة</span></button>
+                    <a class="xp-btn xp-btn-ghost" id="ldBack" href="Event.html"><span data-i18n="platform.backList">رجوع</span></a>
+                </div>
+                <div class="ld-rev">
+                    <h3 style="margin:0 0 12px;font-size:1.1rem" data-i18n="platform.yourRating">تقييمك</h3>
+                    <div class="ld-stars" id="ldStarPick">
+                        <button type="button" data-s="1"><i class="far fa-star"></i></button>
+                        <button type="button" data-s="2"><i class="far fa-star"></i></button>
+                        <button type="button" data-s="3"><i class="far fa-star"></i></button>
+                        <button type="button" data-s="4"><i class="far fa-star"></i></button>
+                        <button type="button" data-s="5"><i class="far fa-star"></i></button>
+                    </div>
+                    <p class="xp-meta" id="ldRevMsg"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div id="ldTicketModal" class="ld-modal" aria-hidden="true" role="dialog" aria-labelledby="ldTicketTitle">
+    <div class="ld-modal-backdrop" id="ldTicketBackdrop"></div>
+    <div class="ld-modal-panel">
+        <h2 id="ldTicketTitle" data-i18n="platform.ticketModalTitle">تم شراء التذكرة</h2>
+        <div id="ldTicketBody" class="ld-ticket-lines"></div>
+        <div class="ld-modal-actions">
+            <a class="xp-btn" href="bookings.html" data-i18n="platform.ticketGotoBookings">حجوزاتي</a>
+            <button type="button" class="xp-btn xp-btn-ghost" id="ldTicketClose" data-i18n="platform.ticketClose">إغلاق</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="lang.js"></script>
+<script src="listing-i18n.js"></script>
+<script src="supabase-auth.js"></script>
+<script src="platform.js"></script>
+<script>
+(function () {
+    function t(k) { return typeof XploreLang !== 'undefined' ? XploreLang.t(k) : k; }
+    function loc(row) {
+        return typeof XploreListingI18n !== 'undefined' ? XploreListingI18n.localizeListing(row) : row;
+    }
+    function esc(s) {
+        return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    }
+    var listingId = new URLSearchParams(location.search).get('id');
+    var currentListing = null;
+    var rawListing = null;
+
+    function paintListing() {
+        if (!rawListing) return;
+        currentListing = loc(rawListing);
+        document.getElementById('ldTitle').textContent = currentListing.title;
+        document.getElementById('ldDesc').textContent = currentListing.description || '';
+        document.getElementById('ldStock').textContent = t('platform.stock') + ': ' + (currentListing.stock != null ? currentListing.stock : 0);
+    }
+
+    function starsHtml(n) {
+        var h = '';
+        for (var i = 1; i <= 5; i++) {
+            h += '<i class="' + (i <= n ? 'fas' : 'far') + ' fa-star"></i>';
+        }
+        return h;
+    }
+
+    function openTicketModal(info) {
+        var modal = document.getElementById('ldTicketModal');
+        var body = document.getElementById('ldTicketBody');
+        if (!modal || !body) return;
+        body.innerHTML =
+            '<p><strong>' + esc(t('platform.ticketBuyer')) + ':</strong> ' + esc(info.buyerName) + '</p>' +
+            '<p><strong>' + esc(t('platform.ticketRef')) + ':</strong> ' + esc(info.bid) + '</p>' +
+            '<p><strong>' + esc(t('platform.ticketQrLabel')) + ':</strong> <code style="font-size:0.85em;word-break:break-all">' + esc(info.qrTok) + '</code></p>' +
+            '<p><strong>' + esc(t('platform.ticketEvent')) + ':</strong> ' + esc(info.title) + '</p>' +
+            '<p><strong>' + esc(t('platform.ticketQty')) + ':</strong> ' + esc(String(info.qty)) + '</p>' +
+            '<p><strong>' + esc(t('platform.ticketTotal')) + ':</strong> ' + esc(Number(info.total).toFixed(2)) + ' SAR</p>';
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeTicketModal() {
+        var modal = document.getElementById('ldTicketModal');
+        if (!modal) return;
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden', 'true');
+    }
+
+    async function init() {
+        XploreLang.init();
+        document.getElementById('xpThemeToggle').addEventListener('click', function () { XplorePlatform.toggleTheme(); });
+
+        if (!listingId) {
+            document.getElementById('ldLoading').innerHTML = '<p class="xp-meta">' + t('platform.badId') + '</p>';
+            return;
+        }
+
+        var sess = await XploreAuth.client().auth.getSession();
+
+        var res = await XplorePlatform.fetchListingById(listingId);
+        if (res.error || !res.data) {
+            document.getElementById('ldLoading').innerHTML = '<p class="xp-meta">' + t('platform.notFound') + '</p>';
+            return;
+        }
+        rawListing = res.data;
+        currentListing = loc(rawListing);
+        document.getElementById('ldLoading').style.display = 'none';
+        document.getElementById('ldContent').style.display = 'block';
+        document.getElementById('ldImg').src = XplorePlatform.encodeLocalImagePath(currentListing.image_url || 'img/LOGO.png');
+        paintListing();
+        document.getElementById('ldPrice').textContent = Number(currentListing.price_sar || 0).toFixed(0) + ' SAR';
+        document.getElementById('ldRating').innerHTML = starsHtml(Math.round(Number(currentListing.rating_avg || 0))) + ' ' + (currentListing.rating_avg || 0) + ' (' + (currentListing.rating_count || 0) + ')';
+
+        var back = document.getElementById('ldBack');
+        if (back) {
+            if (rawListing.listing_type === 'restaurant') back.href = 'CoffeeShop.html';
+            else if (rawListing.listing_type === 'sport') back.href = 'Esport.html';
+            else back.href = 'Event.html';
+        }
+
+        document.addEventListener('xplore:langchange', function () {
+            paintListing();
+            document.querySelectorAll('[data-i18n]').forEach(function (el) {
+                el.textContent = t(el.getAttribute('data-i18n'));
+            });
+        });
+        if (sess && sess.data && sess.data.session) {
+            var fr = await XplorePlatform.myFavoriteListingIds();
+            var set = {};
+            (fr.data || []).forEach(function (r) { set[r.listing_id] = true; });
+            if (set[listingId]) document.getElementById('ldHeart').classList.add('active');
+        }
+
+        document.getElementById('ldHeart').addEventListener('click', async function () {
+            var s2 = await XploreAuth.client().auth.getSession();
+            if (!s2.data || !s2.data.session) {
+                XplorePlatform.toast(t('platform.loginToFav'), 'error');
+                location.href = 'login.html?redirect=' + encodeURIComponent('listing-detail.html?id=' + listingId);
+                return;
+            }
+            var btn = document.getElementById('ldHeart');
+            if (btn.classList.contains('active')) {
+                var r0 = await XplorePlatform.removeFavorite(listingId);
+                if (!r0.error) { btn.classList.remove('active'); XplorePlatform.toast(t('platform.favRemoved'), 'success'); }
+            } else {
+                var r1 = await XplorePlatform.addFavorite(listingId);
+                if (!r1.error) { btn.classList.add('active'); XplorePlatform.toast(t('platform.favAdded'), 'success'); }
+                else XplorePlatform.toast(r1.error.message || t('platform.err'), 'error');
+            }
+        });
+
+        var closeM = document.getElementById('ldTicketClose');
+        var backM = document.getElementById('ldTicketBackdrop');
+        if (closeM) closeM.addEventListener('click', closeTicketModal);
+        if (backM) backM.addEventListener('click', closeTicketModal);
+
+        document.getElementById('ldBuy').addEventListener('click', async function () {
+            var s3 = await XploreAuth.client().auth.getSession();
+            if (!s3.data || !s3.data.session) {
+                XplorePlatform.toast(t('platform.loginToBuy'), 'error');
+                location.href = 'login.html?redirect=' + encodeURIComponent('listing-detail.html?id=' + listingId);
+                return;
+            }
+            var qty = parseInt(document.getElementById('ldQty').value, 10) || 1;
+            if (qty < 1) qty = 1;
+            if (qty > 20) qty = 20;
+            var btn = document.getElementById('ldBuy');
+            btn.disabled = true;
+            var rpc = await XplorePlatform.purchaseListing(listingId, qty);
+            btn.disabled = false;
+            if (rpc.error) {
+                XplorePlatform.toast(rpc.error.message || t('platform.buyErr'), 'error');
+                return;
+            }
+            var payload = rpc.data;
+            if (typeof payload === 'string') {
+                try { payload = JSON.parse(payload); } catch (e2) {}
+            }
+            if (payload && payload.ok) {
+                var u = s3.data.session.user;
+                var meta = u.user_metadata || {};
+                var buyerName = meta.full_name || u.email || '—';
+                var unit = Number(currentListing.price_sar || 0);
+                var total = unit * qty;
+                rawListing.stock = Math.max(0, (Number(rawListing.stock) || 0) - qty);
+                currentListing.stock = rawListing.stock;
+                document.getElementById('ldStock').textContent = t('platform.stock') + ': ' + currentListing.stock;
+                XplorePlatform.toast(t('platform.buyToastShort'), 'success');
+                openTicketModal({
+                    buyerName: buyerName,
+                    bid: String(payload.booking_id || ''),
+                    qrTok: String(payload.qr_token || ''),
+                    title: currentListing.title || '',
+                    qty: qty,
+                    total: total
+                });
+            } else {
+                XplorePlatform.toast((payload && payload.error) || t('platform.buyErr'), 'error');
+            }
+        });
+
+        var picked = 0;
+        document.querySelectorAll('#ldStarPick button').forEach(function (b) {
+            b.addEventListener('click', async function () {
+                var s4 = await XploreAuth.client().auth.getSession();
+                if (!s4.data || !s4.data.session) {
+                    XplorePlatform.toast(t('platform.loginToRate'), 'error');
+                    return;
+                }
+                picked = parseInt(b.getAttribute('data-s'), 10);
+                document.querySelectorAll('#ldStarPick button').forEach(function (x, idx) {
+                    x.querySelector('i').className = (idx < picked ? 'fas' : 'far') + ' fa-star';
+                });
+                var ur = await XplorePlatform.upsertMyReview(listingId, picked);
+                if (ur.error) XplorePlatform.toast(ur.error.message || t('platform.err'), 'error');
+                else {
+                    document.getElementById('ldRevMsg').textContent = t('platform.rateThanks');
+                    XplorePlatform.toast(t('platform.rateThanks'), 'success');
+                }
+            });
+        });
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+})();
+</script>
+</body>
+</html>
